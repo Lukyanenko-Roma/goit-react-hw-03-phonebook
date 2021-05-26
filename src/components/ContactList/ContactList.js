@@ -1,33 +1,25 @@
-import React from "react";
+import ContactItem from '../ContactItem'
 import PropTypes from "prop-types";
-import styles from "./ContactList.module.css";
 
-const ContactList = ({ contacts, onRemoveContact }) => (
-  <ul className={styles.TaskList}>
-    {contacts.map((contact) => (
-      <li className = {styles.TaskList_item}key={contact.id}>
-        {contact.name + ":" + contact.number}
-        {
-          <button
-            className={styles.TaskList_button}
-            type="button"
-            name="delte"
-            onClick={() => onRemoveContact(contact.id)}
-          >
-            delete
-          </button>
-        }
-      </li>
-    ))}
-  </ul>
-);
-
-ContactList.propTypes = {
-  onRemoveContact: PropTypes.func.isRequired,
-  contacts: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-  })),
+const ContactList = ({ list, onClick }) => {
+  return ((list.length ?
+    (
+    <ul>
+      {list.map(item => (
+        <ContactItem
+          key={item.id}
+          id={item.id}
+          onClick={onClick}
+          name={item.name}
+          number={item.number} />
+      ))
+      }
+    </ul>
+  ):(<p>No matches found</p>)))
 }
+ContactList.propTypes = {
+  list: PropTypes.array.isRequired,
+  onClick: PropTypes.func.isRequired,
+};
+
 export default ContactList;
